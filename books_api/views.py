@@ -3,10 +3,14 @@ from .models import Book
 from .serializers import BookSerializer
 from rest_framework import status, viewsets
 from rest_framework.response import Response
+from rest_framework.authentication import BasicAuthentication
+from rest_framework.permissions import IsAuthenticated,IsAdminUser
 
 # BookViewSet is for CRUD_Broweable view for the Book model
 
 class BookViewSet(viewsets.ViewSet):
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [IsAdminUser ]
     def list(self,request):
         book = Book.objects.all()
         serializer = BookSerializer(book,many=True)
